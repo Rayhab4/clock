@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Clock</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #222;
+      font-family: Arial, Helvetica, sans-serif;
+      color: #fff;
+    }
+    .clock {
+      background: #111;
+      padding: 40px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0,0,0,0.6);
+    }
+    #date {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+    #time {
+      font-size: 70px;
+      font-weight: bold;
+      letter-spacing: 3px;
+    }
+    #ampm {
+      font-size: 30px;
+      margin-left: 10px;
+      vertical-align: super;
+    }
+  </style>
+</head>
+<body>
+  <div class="clock">
+    <div id="date"></div>
+    <div id="time">
+      <span id="hours">00</span>:
+      <span id="minutes">00</span>:
+      <span id="seconds">00</span>
+      <span id="ampm">AM</span>
+    </div>
+  </div>
+
+  <script>
+    function updateClock() {
+      const monthNames = ["January","February","March","April","May","June","July",
+                          "August","September","October","November","December"];
+      const dayNames = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+      const now = new Date();
+
+      // Date
+      const dateStr = dayNames[now.getDay()] + ", " +
+                      now.getDate() + " " +
+                      monthNames[now.getMonth()] + " " +
+                      now.getFullYear();
+      document.getElementById("date").textContent = dateStr;
+
+      // Time
+      let h = now.getHours();
+      let m = now.getMinutes();
+      let s = now.getSeconds();
+      let ampm = h < 12 ? "AM" : "PM";
+
+      // convert 24h → 12h format
+      h = h % 12;
+      h = h ? h : 12;
+
+      // add leading zeros
+      h = h < 10 ? "0" + h : h;
+      m = m < 10 ? "0" + m : m;
+      s = s < 10 ? "0" + s : s;
+
+      document.getElementById("hours").textContent = h;
+      document.getElementById("minutes").textContent = m;
+      document.getElementById("seconds").textContent = s;
+      document.getElementById("ampm").textContent = ampm;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock(); // run once immediately
+  </script>
+</body>
+</html>
